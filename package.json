@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "docker-compose up -d",
+    "start": "XDEBUG_HOST=$(hostname -I | awk '{print $1}') docker-compose up -d --build",
     "stop": "docker-compose down",
     "restart": "docker-compose restart",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wp": "XDEBUG_HOST=$(hostname -I | awk '{print $1}') docker-compose run --rm wpcli wp"
   },
   "keywords": [],
   "author": "",

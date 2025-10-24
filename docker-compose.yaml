@@ -1,43 +1,73 @@
 services:
-    mysql:
-        image: mysql:latest
-        restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: wordpress
-            MYSQL_DATABASE: genius
-            MYSQL_USER: wordpress
-            MYSQL_PASSWORD: wordpress
-        ports:
-            - "3310:3306"
-        volumes:
-            - ./.srv/database:/var/lib/mysql
+  mysql:
+    container_name: genius-mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: genius
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./.srv/database:/var/lib/mysql
 
-    wordpress:
-        build: .
-        restart: always
-        environment:
-            WORDPRESS_DB_HOST: mysql:3306
-            WORDPRESS_DB_USER: wordpress
-            WORDPRESS_DB_PASSWORD: wordpress
-            WORDPRESS_DB_NAME: genius
-        ports:
-            - "8000:80"
-        volumes:
-            - ./.srv/wordpress:/var/www/html
-            - ./themes/:/var/www/html/wp-content/themes/
-            - ./plugins/:/var/www/html/wp-content/plugins/
-            - ./mu-plugins/:/var/www/html/wp-content/mu-plugins/
-            - ./.srv/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-        depends_on:
-            - mysql
+  wordpress:
+    container_name: genius-wordpress
+    build: .
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: genius
+    ports:
+      - "8000:80"
+    volumes:
+      - wordpress_files:/var/www/html/wp-content
+      - ./.srv/wordpress:/var/www/html
+      - ./themes/:/var/www/html/wp-content/themes/
+      - ./plugins/:/var/www/html/wp-content/plugins/
+      - ./mu-plugins/:/var/www/html/wp-content/mu-plugins/
+      - ./.srv/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    extra_hosts:
+      - "host.wsl:${XDEBUG_HOST}"
+    depends_on:
+      - mysql
 
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        environment:
-            MYSQL_USERNAME: wordpress
-            MYSQL_ROOT_PASSWORD: wordpress
-            PMA_HOST: mysql
-        ports:
-            - "8181:80"
-        depends_on:
-            - mysql
+  wpcli:
+    container_name: wpcli
+    image: wordpress:cli
+    depends_on:
+      - wordpress
+      - mysql
+    volumes:
+      - wordpress_files:/var/www/html/wp-content
+      - ./.srv/wordpress:/var/www/html
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: genius
+      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT );
+    user: "1000:1000"
+
+  phpmyadmin:
+    container_name: genius-phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      MYSQL_USERNAME: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+      PMA_HOST: mysql
+    ports:
+      - "8181:80"
+    depends_on:
+      - mysql
+
+volumes:
+  wordpress_files:
