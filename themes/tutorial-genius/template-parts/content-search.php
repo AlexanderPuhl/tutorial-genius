@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package genius
+ * @package Tutorial_Genius
  */
 
 ?>
@@ -16,20 +16,20 @@
 		<?php if ( 'post' === get_post_type() ) : ?>
 		<div class="entry-meta">
 			<?php
-			genius_posted_on();
-			genius_posted_by();
+			tutorial_genius_posted_on();
+			tutorial_genius_posted_by();
 			?>
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
 
-	<?php genius_post_thumbnail(); ?>
+	<?php tutorial_genius_post_thumbnail(); ?>
 
 	<div class="entry-summary">
 		<?php the_excerpt(); ?>
 	</div><!-- .entry-summary -->
 
 	<footer class="entry-footer">
-		<?php genius_entry_footer(); ?>
+		<?php tutorial_genius_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

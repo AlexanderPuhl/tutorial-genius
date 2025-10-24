@@ -8,39 +8,39 @@
  *
  * @link https://developer.wordpress.org/themes/functionality/custom-headers/
  *
- * @package genius
+ * @package Tutorial_Genius
  */
 
 /**
  * Set up the WordPress core custom header feature.
  *
- * @uses genius_header_style()
+ * @uses tutorial_genius_header_style()
  */
-function genius_custom_header_setup() {
+function tutorial_genius_custom_header_setup() {
 	add_theme_support(
 		'custom-header',
 		apply_filters(
-			'genius_custom_header_args',
+			'tutorial_genius_custom_header_args',
 			array(
 				'default-image'      => '',
 				'default-text-color' => '000000',
 				'width'              => 1000,
 				'height'             => 250,
 				'flex-height'        => true,
-				'wp-head-callback'   => 'genius_header_style',
+				'wp-head-callback'   => 'tutorial_genius_header_style',
 			)
 		)
 	);
 }
-add_action( 'after_setup_theme', 'genius_custom_header_setup' );
+add_action( 'after_setup_theme', 'tutorial_genius_custom_header_setup' );
 
-if ( ! function_exists( 'genius_header_style' ) ) :
+if ( ! function_exists( 'tutorial_genius_header_style' ) ) :
 	/**
 	 * Styles the header image and text displayed on the blog.
 	 *
-	 * @see genius_custom_header_setup().
+	 * @see tutorial_genius_custom_header_setup().
 	 */
-	function genius_header_style() {
+	function tutorial_genius_header_style() {
 		$header_text_color = get_header_textcolor();
 
 		/*

@@ -9,7 +9,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package genius
+ * @package Tutorial_Genius
  */
 
 get_header();

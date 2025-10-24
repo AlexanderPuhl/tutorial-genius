@@ -4,7 +4,7 @@
  *
  * @link https://jetpack.com/
  *
- * @package genius
+ * @package Tutorial_Genius
  */
 
 /**
@@ -14,13 +14,13 @@
  * See: https://jetpack.com/support/responsive-videos/
  * See: https://jetpack.com/support/content-options/
  */
-function genius_jetpack_setup() {
+function tutorial_genius_jetpack_setup() {
 	// Add theme support for Infinite Scroll.
 	add_theme_support(
 		'infinite-scroll',
 		array(
 			'container' => 'main',
-			'render'    => 'genius_infinite_scroll_render',
+			'render'    => 'tutorial_genius_infinite_scroll_render',
 			'footer'    => 'page',
 		)
 	);
@@ -33,7 +33,7 @@ function genius_jetpack_setup() {
 		'jetpack-content-options',
 		array(
 			'post-details' => array(
-				'stylesheet' => 'genius-style',
+				'stylesheet' => 'tutorial-genius-style',
 				'date'       => '.posted-on',
 				'categories' => '.cat-links',
 				'tags'       => '.tags-links',
@@ -48,13 +48,13 @@ function genius_jetpack_setup() {
 		)
 	);
 }
-add_action( 'after_setup_theme', 'genius_jetpack_setup' );
+add_action( 'after_setup_theme', 'tutorial_genius_jetpack_setup' );
 
-if ( ! function_exists( 'genius_infinite_scroll_render' ) ) :
+if ( ! function_exists( 'tutorial_genius_infinite_scroll_render' ) ) :
 	/**
 	 * Custom render function for Infinite Scroll.
 	 */
-	function genius_infinite_scroll_render() {
+	function tutorial_genius_infinite_scroll_render() {
 		while ( have_posts() ) {
 			the_post();
 			if ( is_search() ) :
