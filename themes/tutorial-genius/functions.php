@@ -8,6 +8,17 @@
  * @package Tutorial_Genius
  */
 
+function tutorialgenius_enqueue_scripts() {
+  $template_dir = get_template_directory_uri();
+  wp_enqueue_style('tutorialgenius-general', "{$template_dir}/assets/css/general.css", array(), '1.0.0', 'all');
+  wp_enqueue_script('tutorialgenius-script-js', "{$template_dir}/assets/js/script.js", array(), '1.0', true);
+  if (is_singular() && comments_open() && get_option('thread_comments')) {
+    wp_enqueue_script('comment-reply');
+  }
+}
+add_action('wp_enqueue_scripts', 'tutorialgenius_enqueue_scripts');
+
+
 if (! defined('_S_VERSION')) {
 	// Replace the version number of the theme on each release.
 	define('_S_VERSION', '1.0.0');
@@ -136,21 +147,6 @@ function tutorial_genius_widgets_init() {
 add_action('widgets_init', 'tutorial_genius_widgets_init');
 
 /**
- * Enqueue scripts and styles.
- */
-function tutorial_genius_scripts() {
-	wp_enqueue_style('tutorial-genius-style', get_stylesheet_uri(), array(), _S_VERSION);
-	wp_style_add_data('tutorial-genius-style', 'rtl', 'replace');
-
-	wp_enqueue_script('tutorial-genius-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
-
-	if (is_singular() && comments_open() && get_option('thread_comments')) {
-		wp_enqueue_script('comment-reply');
-	}
-}
-add_action('wp_enqueue_scripts', 'tutorial_genius_scripts');
-
-/**
  * Implement the Custom Header feature.
  */
 require get_template_directory() . '/inc/custom-header.php';
@@ -176,10 +172,3 @@ require get_template_directory() . '/inc/customizer.php';
 if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-
-function tutorialgenius_enqueue_scripts() {
-	$template_dir = get_template_directory_uri();
-	wp_enqueue_style('tutorialgenius-general', "{$template_dir}/assets/css/general.css", array(), '1.0.0', 'all');
-	wp_enqueue_script('tutorialgenius-script-js', "{$template_dir}/assets/js/script.js", array(), '1.0', true);
-}
-add_action('wp_enqueue_scripts', 'tutorialgenius_enqueue_scripts');
