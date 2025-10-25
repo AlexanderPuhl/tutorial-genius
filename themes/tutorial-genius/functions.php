@@ -18,6 +18,30 @@ function tutorialgenius_enqueue_scripts() {
 }
 add_action('wp_enqueue_scripts', 'tutorialgenius_enqueue_scripts');
 
+function tutorialgenius_theme_init() {
+  register_nav_menus(array(
+    'header_nav' => 'Header Navigation',
+    'footer_nav' => 'Footer Navigation',
+  ));
+
+  /*
+		* Switch default core markup for search form, comment form, and comments
+		* to output valid HTML5.
+		*/
+  add_theme_support(
+    'html5',
+    array(
+      'search-form',
+      'comment-form',
+      'comment-list',
+      'gallery',
+      'caption',
+      'style',
+      'script',
+    )
+  );
+}
+add_action('after_setup_theme', 'tutorialgenius_theme_init', 0);
 
 if (! defined('_S_VERSION')) {
   // Replace the version number of the theme on each release.
@@ -57,30 +81,6 @@ function tutorial_genius_setup() {
 		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		*/
   add_theme_support('post-thumbnails');
-
-  // This theme uses wp_nav_menu() in one location.
-  register_nav_menus(
-    array(
-      'menu-1' => esc_html__('Primary', 'tutorial-genius'),
-    )
-  );
-
-  /*
-		* Switch default core markup for search form, comment form, and comments
-		* to output valid HTML5.
-		*/
-  add_theme_support(
-    'html5',
-    array(
-      'search-form',
-      'comment-form',
-      'comment-list',
-      'gallery',
-      'caption',
-      'style',
-      'script',
-    )
-  );
 
   // Set up the WordPress core custom background feature.
   add_theme_support(
