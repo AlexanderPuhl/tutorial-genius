@@ -25,10 +25,8 @@
 <body <?php body_class(); ?>>
   <?php wp_body_open(); ?>
   <?php
-  $name = 'Alex Puhl aka <strong>OUTLAWXXX</strong>';
-  ?>
 
-
-  <?php
+  $name = esc_html__('Hello', 'tutorial-genius');
   echo $name;
+  esc_html_e('Hello', 'tutorial-genius');
   ?>
