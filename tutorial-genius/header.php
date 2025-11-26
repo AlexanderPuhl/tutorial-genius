@@ -24,3 +24,11 @@
 
 <body <?php body_class(); ?>>
   <?php wp_body_open(); ?>
+  <?php
+  $name = 'Alex Puhl aka <strong>OUTLAWXXX</strong>';
+  ?>
+
+
+  <?php
+  echo $name;
+  ?>
