@@ -23,7 +23,7 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: genius
     ports:
-      - "8000:80"
+      - "80:80"
     volumes:
       - wordpress_files:/var/www/html/wp-content
       - ./.srv/wordpress:/var/www/html
